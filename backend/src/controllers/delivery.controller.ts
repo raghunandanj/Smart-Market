@@ -41,19 +41,19 @@ export const getDeliveryRoute = async (req: Request, res: Response) => {
             };
         }
 
-        // If no saved address, place buyer near seller so route still shows something meaningful
-        const resolvedBuyer = buyerLocation ?? {
-            lat: sellerLocation.lat + 0.05,
-            lng: sellerLocation.lng + 0.07,
-            address: 'Near seller location (add a saved address for accuracy)',
-        };
-
         // Get seller location from shop
         const sellerLocation = {
             lat: shop.location.coordinates[1], // latitude
             lng: shop.location.coordinates[0], // longitude
             address: shop.address,
             shopName: shop.name,
+        };
+
+        // If no saved address, place buyer near seller so route still shows something meaningful
+        const resolvedBuyer = buyerLocation ?? {
+            lat: sellerLocation.lat + 0.05,
+            lng: sellerLocation.lng + 0.07,
+            address: 'Near seller location (add a saved address for accuracy)',
         };
 
         res.json({
